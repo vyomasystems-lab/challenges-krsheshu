@@ -8,7 +8,7 @@ module seq_detect_1011(seq_seen, inp_bit, reset, clk);
   input clk;
 
   parameter IDLE = 0,
-            SEQ_1 = 1, 
+            SEQ_1 = 1,
             SEQ_10 = 2,
             SEQ_101 = 3,
             SEQ_1011 = 4;
