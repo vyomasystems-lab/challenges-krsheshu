@@ -56,7 +56,6 @@ def run_test(dut):
     stimulus_set                    = [ -1*pow(2,31), pow(2,31)-1, -1*pow(2,31)>>1, (pow(2,31)-1)>>1, -1*pow(2,31)>>2, (pow(2,31)-1)>>2, 1, 0, -1 ]
     stimulus_permutations           = list(permutations(stimulus_set,3))
 
-    #radomized_tries = 10000
     tries            = 0
     for i in range(len(all_instructions)):
         print("\033[93m",end='\n')
@@ -66,14 +65,13 @@ def run_test(dut):
 
         instruction_nb_errors = 0
         ######### CTB : Modify the test to expose the bug #############
-        #for _ in range(radomized_tries):
         for ii in range(len(stimulus_permutations)):
 
             tries += 1
             # input transaction
-            mav_putvalue_src1   = stimulus_permutations [ii][0]   #random.randint(-1*pow(2,31),pow(2,31)-1)
-            mav_putvalue_src2   = stimulus_permutations [ii][1]   #random.randint(-1*pow(2,31),pow(2,31)-1)
-            mav_putvalue_src3   = stimulus_permutations [ii][2]   #random.randint(-1*pow(2,31),pow(2,31)-1)
+            mav_putvalue_src1   = stimulus_permutations [ii][0]
+            mav_putvalue_src2   = stimulus_permutations [ii][1]
+            mav_putvalue_src3   = stimulus_permutations [ii][2]
             mav_putvalue_instr  = all_instructions[i]
 
             # expected output from the model
