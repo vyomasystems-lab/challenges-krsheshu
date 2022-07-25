@@ -13,6 +13,7 @@ import random
 from bitmanip_instructions import Bitmanip_Instructions
 from model_mkbitmanip import *
 
+from itertools import permutations
 
 # Clock Generation
 @cocotb.coroutine
@@ -52,8 +53,11 @@ def run_test(dut):
     ternary_imm_instructions        = bitmanip_instructions.get_instructions_ternary_imm()
     all_instructions                = bitmanip_instructions.get_instructions_all()
 
+    stimulus_set                    = [ -1*pow(2,31), pow(2,31)-1, -1*pow(2,31)>>1, (pow(2,31)-1)>>1, -1*pow(2,31)>>2, (pow(2,31)-1)>>2, 1, 0, -1 ]
+    stimulus_permutations           = list(permutations(stimulus_set,3))
 
-    radomized_tries = 10000
+    #radomized_tries = 10000
+    tries            = 0
     for i in range(len(all_instructions)):
         print("\033[93m",end='\n')
         cocotb.log.info('-------------------------------------------------------')
@@ -62,12 +66,15 @@ def run_test(dut):
 
         instruction_nb_errors = 0
         ######### CTB : Modify the test to expose the bug #############
-        for _ in range(radomized_tries):
+        #for _ in range(radomized_tries):
+        for ii in range(len(stimulus_permutations)):
+
+            tries += 1
             # input transaction
-            mav_putvalue_src1 = random.randint(-1*pow(2,31),pow(2,31)-1)
-            mav_putvalue_src2 = random.randint(-1*pow(2,31),pow(2,31)-1)
-            mav_putvalue_src3 = random.randint(-1*pow(2,31),pow(2,31)-1)
-            mav_putvalue_instr = all_instructions[i]
+            mav_putvalue_src1   = stimulus_permutations [ii][0]   #random.randint(-1*pow(2,31),pow(2,31)-1)
+            mav_putvalue_src2   = stimulus_permutations [ii][1]   #random.randint(-1*pow(2,31),pow(2,31)-1)
+            mav_putvalue_src3   = stimulus_permutations [ii][2]   #random.randint(-1*pow(2,31),pow(2,31)-1)
+            mav_putvalue_instr  = all_instructions[i]
 
             # expected output from the model
             expected_mav_putvalue = bitmanip(mav_putvalue_instr, mav_putvalue_src1, mav_putvalue_src2, mav_putvalue_src3)
@@ -99,10 +106,11 @@ def run_test(dut):
 
         if ( instruction_nb_errors > 0):
             failed_instructions.append(mav_putvalue_instr)
+
         try:
             assert instruction_nb_errors == 0
         except AssertionError:
-            cocotb.log.info('Nb errors in {} randomized tries: {}'.format(radomized_tries,instruction_nb_errors))
+            cocotb.log.error('Nb errors in {} tries: {}'.format(tries,instruction_nb_errors))
 
         print("\033[93m",end='')
         cocotb.log.info('-------------------------------------------------------')
