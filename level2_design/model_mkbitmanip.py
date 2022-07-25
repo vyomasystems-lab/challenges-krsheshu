@@ -253,7 +253,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
         mav_putvalue = len(m)-len(m.rstrip('0'))
         mav_putvalue=(mav_putvalue<<1)|1
         return mav_putvalue
-    
+
     if((func7 == "0110000") and (imm_value_1 == "00010") and (func3 == "001") and (opcode == "0010011")):
         print('--PCNT   23')
         binary = bin(mav_putvalue_src1)
@@ -703,7 +703,7 @@ def bitmanip(mav_putvalue_instr, mav_putvalue_src1,mav_putvalue_src2, mav_putval
             x= ((x & 0x00ff00ff)<< 8) | (( x & 0xff00ff00) >>8)
         if (shamt_imm & 16):
             x= ((x & 0x0000ffff)<< 16) | (( x & 0xffff0000) >>16)
-        
+
         mav_putvalue=x & 0xffffffff
         #print("mav_putvalue before adding valid bit",hex(mav_putvalue))
         mav_putvalue=(mav_putvalue<<1)|1
