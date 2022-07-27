@@ -115,7 +115,7 @@ def run_test(dut):
         print("\033[00m",end='')
 
     print("\033[93m",end='')
-    cocotb.log.info('Total nb instructions failures: {}'.format(nb_failures))
+    cocotb.log.info('Total nb tries: {}, nb instructions failures: {}'.format(tries, nb_failures))
     print("\033[00m",end='')
     if ( nb_failures > 0 ):
         for i in range( len(failed_instructions) ):
