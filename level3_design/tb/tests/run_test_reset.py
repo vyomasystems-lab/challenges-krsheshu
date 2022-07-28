@@ -1,5 +1,5 @@
 import cocotb
-from timer_bfm import clock_gen, reset_module
+from tb.bfm.timer_bfm import clock_gen, reset_module
 
 # Reset Test
 @cocotb.test()
