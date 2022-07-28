@@ -28,7 +28,6 @@ module timer  #(  parameter TIMER_BITWIDTH    =   32  ,
 //-------------------------------------------------------------
 //  Internal signals
 //-------------------------------------------------------------
-
 wire                              rst_as_n              ;
 
 wire      [ NB_CAPTURES -1 : 0 ] start_i_rising         ;

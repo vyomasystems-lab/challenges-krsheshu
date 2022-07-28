@@ -14,7 +14,7 @@ module alarm_generator  #(
             input   wire  [ TIMER_BITWIDTH*NB_CAPTURES -1 : 0 ]   alarm_i      ,
             input   wire  [ TIMER_BITWIDTH*NB_CAPTURES -1 : 0 ]   counter_i    ,
 
-            output  wire                  [ NB_CAPTURES-1 : 0 ]   alarm_o
+            output  reg                   [ NB_CAPTURES-1 : 0 ]   alarm_o
 
         );
 
