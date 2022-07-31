@@ -28,8 +28,8 @@ async def run_test_rst_capture(dut):
     await timer_bfm.enable_rst_capture_in  ( timer_bfm.CLK_PERIOD, dut.clk_in, dut.rst_capture_in)
     await RisingEdge(dut.clk_in)
     await RisingEdge(dut.clk_in)
-    cocotb.log.info('Before reset, captured_out: 0b{},  After reset, captured_out: 0b{}'
-                .format(sampled_capture_value, dut.captured_out.value) )
+    cocotb.log.info('Before reset, captured_out: {},  After reset, captured_out: {}'
+                .format(int(sampled_capture_value), int(dut.captured_out.value)) )
 
 
     await Timer( 1, units='ns' )
