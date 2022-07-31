@@ -18,7 +18,6 @@ module timer
             input   wire  [ 31: 0 ]     alarm_in        ,
 
             output  wire  [ 31: 0 ]     captured_out    ,
-            output  wire  [ 31: 0 ]     counter_out     ,
             output  wire                alarm_out
 
         );

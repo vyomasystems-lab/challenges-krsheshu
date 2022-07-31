@@ -32,6 +32,7 @@ def enable_start_in( time_ns, clk, signal ):
     yield Timer( time_ns, units='ns' )
     yield RisingEdge(clk)
     # Driving start_in
+    cocotb.log.info("Enabling start_in")
     signal.value = 1
 
 

@@ -7,7 +7,7 @@ PWD=$(shell pwd)
 VERILOG_SOURCES = $(PWD)/src/*.v
 
 TOPLEVEL := timer
-MODULE   := tb.tests.run_test_reset,tb.tests.run_test_rst_capture
+MODULE   := tb.tests.run_test_reset,tb.tests.run_test_rst_capture,tb.tests.run_test_captured_out
 
 PYTHONPATH = $PYTHONPATH:$PWD
 
