@@ -1,22 +1,20 @@
 //-------------------------------------------------------------
+//  Tech Task 1
 //  Capture FSM Module
 //-------------------------------------------------------------
 
-module capture_output_fsm  #(
-                  parameter TIMER_BITWIDTH    =   32  ,
-                            NB_CAPTURES       =   10  )
-
+module capture_output_fsm
 
         (
-            input   wire                                          clk_i                     ,
-            input   wire                                          rst_an_i                  ,
+            input   wire                clk_i                     ,
+            input   wire                rst_an_i                  ,
 
-            input   wire                 [ NB_CAPTURES-1 : 0 ]    start_in_rising_i         ,
-            input   wire                 [ NB_CAPTURES-1 : 0 ]    capture_in_rising_i       ,
-            input   wire                 [ NB_CAPTURES-1 : 0 ]    rst_capture_in_rising_i   ,
+            input   wire                start_in_rising_i         ,
+            input   wire                capture_in_rising_i       ,
+            input   wire                rst_capture_in_rising_i   ,
 
-            output  wire  [ TIMER_BITWIDTH*NB_CAPTURES -1: 0 ]    captured_o                ,
-            output  wire  [ TIMER_BITWIDTH*NB_CAPTURES -1: 0 ]    counter_o
+            output  wire  [ 31: 0 ]     captured_o                ,
+            output  wire  [ 31: 0 ]     counter_o
 
         );
 
@@ -24,67 +22,44 @@ module capture_output_fsm  #(
 //  Internal signals
 //-------------------------------------------------------------
 
-reg     [ 1:0  ]                    capture_fsm_state           [ NB_CAPTURES-1 :0]       ;
-reg     [ TIMER_BITWIDTH-1:0 ]      counter                     [ NB_CAPTURES-1 :0]       ;
-reg     [ TIMER_BITWIDTH-1:0 ]      captured_o_reg              [ NB_CAPTURES-1 :0]       ;
+reg     [ 1:0  ]            capture_fsm_state                 ;
+reg     [ 31:0 ]            counter                           ;
+reg     [ 31:0 ]            captured_o_reg                    ;
 
 localparam                  st_idle            = 2'd0         ;
 localparam                  st_counting        = 2'd1         ;
 localparam                  st_captured        = 2'd2         ;
 
-genvar i ;
-
 //-------------------------------------------------------------
 //----------------------- Outputs  ----------------------------
 //-------------------------------------------------------------
 
-generate
+assign counter_o        =   counter             ;
+assign captured_o       =   captured_o_reg      ;
 
-    for ( i=0; i<NB_CAPTURES; i=i+1 )  begin
-            assign captured_o [ (i*TIMER_BITWIDTH) +: TIMER_BITWIDTH ]    =  captured_o_reg [ i ];
-            assign counter_o  [ (i*TIMER_BITWIDTH) +: TIMER_BITWIDTH ]    =  counter        [ i ];
+always @(posedge clk_i, negedge rst_an_i ) begin
 
-
-    end
-
-endgenerate
-
-generate
-
-    for ( i=0; i<NB_CAPTURES; i=i+1 ) begin
-
-        always @(posedge clk_i, negedge rst_an_i ) begin
-
-          if ( rst_an_i == 1'b0 )
-              captured_o_reg  [i] <=    32'b0;
-          else if ( rst_capture_in_rising_i [i] == 1'b1 )
-              captured_o_reg  [i] <=    32'b0;
-          else if ( ( capture_fsm_state [i] == st_counting ) && ( capture_in_rising_i [i]== 1'b1 ) )
-              captured_o_reg  [i] <=    counter [i] ;
-        end
-    end
-endgenerate
+  if ( rst_an_i == 1'b0 )
+      captured_o_reg <=    32'b0;
+  else if ( rst_capture_in_rising_i == 1'b1 )
+      captured_o_reg  <=    32'b0;
+  else if ( ( capture_fsm_state == st_counting ) && ( capture_in_rising_i == 1'b1 ) )
+      captured_o_reg  <=    counter ;
+end
 
 //-------------------------------------------------------------
 //-------------------- Internal Counter------------------------
 //-------------------------------------------------------------
 
-generate
+always @(posedge clk_i, negedge rst_an_i ) begin
 
-    for ( i=0; i<NB_CAPTURES; i=i+1 ) begin
-
-        always @(posedge clk_i, negedge rst_an_i ) begin
-
-          if ( rst_an_i == 1'b0 )
-              counter  [i] <=    32'b0;
-          else if ( start_in_rising_i [i] == 1'b1 )
-              counter  [i] <=    32'b0;
-          else
-              counter  [i] <=    counter [i] + 1'b1 ;
-        end
-    end
-
-endgenerate
+  if ( rst_an_i == 1'b0 )
+      counter   <=    32'b0;
+  else if ( start_in_rising_i == 1'b1 )
+      counter   <=    32'b0;
+  else
+      counter   <=    counter + 1'b1 ;
+end
 
 //-------------------------------------------------------------
 //-------------------- State Machine --------------------------
@@ -94,39 +69,33 @@ endgenerate
 // Inputs:  start_in_rising, capture_in_rising, rst_capture_in_rising
 // Outputs:
 
-generate
+always @(posedge clk_i, negedge rst_an_i  ) begin
 
-    for ( i=0; i<NB_CAPTURES; i=i+1 ) begin
+  if ( rst_an_i    == 1'b0 )
+      capture_fsm_state     <= st_idle  ;
 
-        always @(posedge clk_i, negedge rst_an_i  ) begin
+  else if ( rst_capture_in_rising_i == 1'b1 )
+      capture_fsm_state     <= st_idle  ;
 
-            if ( rst_an_i    == 1'b0 )
-                capture_fsm_state [i]     <= st_idle  ;
+  else begin
+      case ( capture_fsm_state )
 
-            else begin
-                case ( capture_fsm_state [i] )
+          st_idle               :     begin
+                                        if (  start_in_rising_i == 1'b1 )
+                                            capture_fsm_state <= st_counting;
+                                      end
 
-                    st_idle               :     begin
-                                                  if (  start_in_rising_i [i] == 1'b1 )
-                                                      capture_fsm_state [i] <= st_counting;
-                                                end
+          st_counting           :     begin
+                                        if (  capture_in_rising_i == 1'b1 )
+                                            capture_fsm_state <= st_idle;
+                                      end
 
-                    st_counting           :     begin
-                                                  if (  capture_in_rising_i [i] == 1'b1 )
-                                                      capture_fsm_state [i] <= st_idle;
-                                                end
+          default               :     capture_fsm_state <= st_idle ;
 
-                    default               :     capture_fsm_state [i] <= st_idle ;
+      endcase
+  end
+end
 
-                endcase
-
-            end
-
-        end
-
-    end
-
-endgenerate
 //-------------------------------------------------------------
 
 

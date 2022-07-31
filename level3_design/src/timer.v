@@ -4,35 +4,34 @@
 //-------------------------------------------------------------
 
 
-module timer  #(  parameter TIMER_BITWIDTH    =   32  ,
-                            NB_CAPTURES       =   10  )
+module timer
 
         (
-            input   wire                                        clk_in          ,
-            input   wire                                        rst_an_in       ,
+            input   wire                clk_in          ,
+            input   wire                rst_an_in       ,
 
-            input   wire                 [ NB_CAPTURES-1 : 0 ]  rst_capture_in  ,
-            input   wire                 [ NB_CAPTURES-1 : 0 ]  start_in        ,
-            input   wire                 [ NB_CAPTURES-1 : 0 ]  capture_in      ,
+            input   wire                rst_capture_in  ,
+            input   wire                start_in        ,
+            input   wire                capture_in      ,
 
-            input   wire                 [ NB_CAPTURES-1 : 0 ]  alarm_en_in     ,
-            input   wire  [ TIMER_BITWIDTH*NB_CAPTURES -1: 0 ]  alarm_in        ,
+            input   wire                alarm_en_in     ,
+            input   wire  [ 31: 0 ]     alarm_in        ,
 
-            output  wire  [ TIMER_BITWIDTH*NB_CAPTURES -1: 0 ]  captured_out    ,
-            output  wire  [ TIMER_BITWIDTH*NB_CAPTURES -1: 0 ]  counter_out     ,
-
-            output  wire                 [ NB_CAPTURES-1 : 0 ]  alarm_out
+            output  wire  [ 31: 0 ]     captured_out    ,
+            output  wire  [ 31: 0 ]     counter_out     ,
+            output  wire                alarm_out
 
         );
 
 //-------------------------------------------------------------
 //  Internal signals
 //-------------------------------------------------------------
-wire                              rst_as_n              ;
 
-wire      [ NB_CAPTURES -1 : 0 ] start_i_rising         ;
-wire      [ NB_CAPTURES -1 : 0 ] capture_i_rising       ;
-wire      [ NB_CAPTURES -1 : 0 ] rst_capture_i_rising   ;
+wire                  rst_as_n              ;
+
+wire                  start_i_rising        ;
+wire                  capture_i_rising      ;
+wire                  rst_capture_i_rising  ;
 
 //-------------------------------------------------------------
 //  Modules
@@ -55,11 +54,7 @@ reset_synchronizer  rst_sync_inst
 
 //  Edge Detector
 
-  edge_detector #(
-                  .NB_CAPTURES            ( NB_CAPTURES         )
-                )
-
-    edge_detector_inst
+edge_detector   edge_detector_inst
 
         (
               .clk_i                        (  clk_in                   ),
@@ -79,12 +74,7 @@ reset_synchronizer  rst_sync_inst
 
 //  Capture Outputs FSM
 
-  capture_output_fsm  #(
-                          .TIMER_BITWIDTH         ( TIMER_BITWIDTH      ),
-                          .NB_CAPTURES            ( NB_CAPTURES         )
-                      )
-
-    capture_output_fsm_inst
+capture_output_fsm   capture_output_fsm_inst
 
         (
               .clk_i                        ( clk_in                  ),
@@ -103,12 +93,7 @@ reset_synchronizer  rst_sync_inst
 
 //  Alarm Generator
 
-  alarm_generator  #(
-                      .TIMER_BITWIDTH         ( TIMER_BITWIDTH      ),
-                      .NB_CAPTURES            ( NB_CAPTURES         )
-                    )
-
-     alarm_generator_inst
+alarm_generator   alarm_generator_inst
 
             (
                   .clk_i                    ( clk_in                  ),
@@ -124,6 +109,14 @@ reset_synchronizer  rst_sync_inst
 
 
 //-------------------------------------------------------------
+
+`ifdef COCOTB_SIM
+  initial begin
+    $dumpfile ("waves/timer.vcd");
+    $dumpvars (0, timer);
+    #1;
+  end
+`endif
 
 endmodule
 
