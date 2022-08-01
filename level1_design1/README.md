@@ -2,7 +2,7 @@
 
 The verification environment is setup using [Vyoma's UpTickPro](https://vyomasystems.com) provided for the hackathon.
 
-![](https://imgur.com/a/UOeg1qj)
+![alt text for screen readers](./../id/vyoma_id_Sheshu_Ramanandan.png "ID-Sheshu Ramanandan").
 
 ## Verification Environment
 
@@ -34,9 +34,9 @@ The [CoCoTb](https://www.cocotb.org/) based Python test is developed as explaine
 
 ## Verification Strategy
 
-1) the verification strategy was to run the whole test cases one after another and to check the DUT output with reference expected outputs
+1) The verification strategy was to run the whole test cases one after another and to check the DUT output with reference expected outputs
 
 ## Is the verification complete ?
 
 1) The verification is almost complete as we run all select states with this test case
-2) All input state spaces are not checked as we assume there is no input word compression inside the DUT for the inputs
+2) All input state spaces are not checked as we assume there is no input word compression inside the DUT
