@@ -9,7 +9,7 @@ VERILOG_SOURCES = $(PWD)/mux.v
 TOPLEVEL := mux          # design
 MODULE   := test_mux     # test
 
-PYTHONPATH := ${PYTHONPATH}:${PWD}/../
+export PYTHONPATH := ${PYTHONPATH}:${PWD}/../
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 
