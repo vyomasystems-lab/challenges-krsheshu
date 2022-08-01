@@ -114,12 +114,12 @@ async def test_mux(dut):
             output_ref_val  =   None
 
         try:
-            print("\033[93m",end='')
-            dut._log.info('Test: {:02}, select = {}, input: {} , output: {}'.format(i, select,output_ref_val,dut.out.value) )
-            print("\033[00m",end='')
             assert dut.out.value == output_ref_val
-        except AssertionError:
-            dut._log.error('Test: {:02}, select = {}, input: {} , output: {} Failed!'.format(i, select,output_ref_val,dut.out.value) )
+            print("\033[92m",end='')
+            dut._log.info('Test: {:02}, select = {}, input: {} = output: {}'.format(i, select,output_ref_val,dut.out.value) )
+            print("\033[00m",end='')
+        except AssertionError as e:
+            dut._log.error('Test: {:02}, select = {}, input: {} != output: {} Failed!'.format(i, select,output_ref_val,dut.out.value) )
             testpass = False
 
     assert testpass == True

@@ -9,7 +9,9 @@ VERILOG_SOURCES = $(PWD)/mux.v
 TOPLEVEL := mux          # design
 MODULE   := test_mux     # test
 
+PYTHONPATH := ${PYTHONPATH}:${PWD}/../
+
 include $(shell cocotb-config --makefiles)/Makefile.sim
 
 clean_all: clean
-	rm -rf *.xml sim_build __pycache__ 
+	rm -rf *.xml sim_build __pycache__

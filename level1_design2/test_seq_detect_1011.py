@@ -49,11 +49,11 @@ async def test_seq_bug1(dut):
             nb_ref_sequence_found       +=  1
 
             try:
-                print("\033[93m",end='')
+                assert dut.seq_seen.value == ref_sequence_seen
+                print("\033[92m",end='')
                 dut._log.info('Reference Sequence detected! Signal ref_sequence_seen : {}, Output signal dut_seq_seen : {}'  \
                                                         .format(ref_sequence_seen, dut.seq_seen.value) )
                 print("\033[00m",end='')
-                assert dut.seq_seen.value == ref_sequence_seen
                 nb_sequence_detected    +=  1
 
             except AssertionError:
@@ -78,7 +78,7 @@ async def test_seq_bug1(dut):
 
     try:
         assert nb_ref_sequence_found == nb_sequence_detected
-        print("\033[93m",end='')
+        print("\033[92m",end='')
         dut._log.info( 'nb_ref_sequence_found: {}, nb_sequence_detected: {}'.format(nb_ref_sequence_found, nb_sequence_detected) )
         print("\033[00m",end='')
     except AssertionError:
