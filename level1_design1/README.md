@@ -2,7 +2,7 @@
 
 The verification environment is setup using [Vyoma's UpTickPro](https://vyomasystems.com) provided for the hackathon.
 
-![alt text for screen readers](./../id/vyoma_id_Sheshu_Ramanandan.png "ID-Sheshu Ramanandan").
+![alt text for screen readers](./images/vyoma_id_Sheshu_Ramanandan.png "ID-Sheshu Ramanandan").
 
 ## Verification Environment
 
