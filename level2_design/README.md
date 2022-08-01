@@ -12,7 +12,10 @@ The [CoCoTb](https://www.cocotb.org/) based Python test is developed as explaine
 ![alt text for screen readers](./images/bitmanip_class.png "bitmanip class").
 
 2) An object of the above class is instantiated in the testbench which can then use any kind of instruction for the tests as per the requirement.
-3) A carefully choosen stimulus set is generated looking at corner cases which consists of 7 inputs
+
+![alt text for screen readers](./images/stimulus.png "bitmanip class").
+
+3) A carefully choosen stimulus set is generated looking at corner cases which consists of 7 inputs which can be seen in the above image
 4) From this 7 input set all the permutations of 3 inputs are choosen as final test vectors for coprocessor registers in the testbench
 5) This choice adds up to 7560 test cases which are then passed to the DUT as well as to the reference model
 7) The output from the reference model is then compared with the DUT outputs and the error instructions are displayed
