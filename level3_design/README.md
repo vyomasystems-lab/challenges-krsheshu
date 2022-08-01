@@ -7,7 +7,7 @@
 ## Verification Environment
 
 The [CoCoTb](https://www.cocotb.org/) based Python test is developed as explained.
-1) Three test suits are created for testing the complete Tiem of Flight timer design
+1) Three test suits are created for testing the complete Time of Flight timer design
 2) The first test suit tests the reset condition for the outputs ( shown below )
 
 ![alt text for screen readers](./images/test_reset.png "test_reset").
