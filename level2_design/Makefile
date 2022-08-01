@@ -4,7 +4,7 @@ TOPLEVEL_LANG ?= verilog
 
 PWD=$(shell pwd)
 
-export PYTHONPATH := $(PWD):$(PYTHONPATH)  # reference model
+export PYTHONPATH := ${PYTHONPATH}:${PWD}
 
 VERILOG_SOURCES = $(PWD)/mkbitmanip.v
 
@@ -14,4 +14,4 @@ MODULE   := test_mkbitmanip   # test
 include $(shell cocotb-config --makefiles)/Makefile.sim
 
 clean_all: clean
-	rm -rf *.xml sim_build __pycache__ 
+	rm -rf *.xml sim_build __pycache__

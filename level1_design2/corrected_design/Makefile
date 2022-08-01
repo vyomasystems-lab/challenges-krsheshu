@@ -9,7 +9,7 @@ VERILOG_SOURCES = $(PWD)/seq_detect_1011.v
 TOPLEVEL := seq_detect_1011          # design
 MODULE   := test_seq_detect_1011     # test
 
-PYTHONPATH := ${PYTHONPATH}:${PWD}/../
+export PYTHONPATH := ${PYTHONPATH}:${PWD}/../
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 

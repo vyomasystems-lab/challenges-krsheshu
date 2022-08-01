@@ -9,7 +9,7 @@ VERILOG_SOURCES = $(PWD)/src/*.v
 TOPLEVEL := timer
 MODULE   := tb.tests.run_test_reset,tb.tests.run_test_rst_capture,tb.tests.run_test_captured_out
 
-PYTHONPATH := ${PYTHONPATH}:${PWD}
+export PYTHONPATH := ${PYTHONPATH}:${PWD}
 
 include $(shell cocotb-config --makefiles)/Makefile.sim
 
