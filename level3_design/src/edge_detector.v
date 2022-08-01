@@ -1,6 +1,6 @@
 //-------------------------------------------------------------
-//  Tech Task 1
 //  Edge Detector Module
+//  Author : Sheshu Ramanandan : krsheshu@gmail.com
 //-------------------------------------------------------------
 
 module edge_detector

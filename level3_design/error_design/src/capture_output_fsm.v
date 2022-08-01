@@ -1,6 +1,6 @@
 //-------------------------------------------------------------
-//  Tech Task 1
 //  Capture FSM Module
+//  Author : Sheshu Ramanandan : krsheshu@gmail.com
 //-------------------------------------------------------------
 
 module capture_output_fsm

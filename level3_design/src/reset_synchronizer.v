@@ -1,7 +1,7 @@
 //-------------------------------------------------------------
-//  Tech Task 1
 //  Reset Synchronizer Module
 //  Async assert Sync Deasset Reset synchronizer
+//  Author : Sheshu Ramanandan : krsheshu@gmail.com
 //-------------------------------------------------------------
 
 module reset_synchronizer
