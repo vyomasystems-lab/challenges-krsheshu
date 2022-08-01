@@ -17,8 +17,8 @@ async def run_test_captured_out(dut):
 
     random.seed( a = 0 )
     nb_failures     = 0
-    nb_tests        = 100
-    for _ in range(nb_tests):
+    nb_tests        = 10
+    for test_nb in range(nb_tests):
         traveltime_in_clks = random.randint(0,1000)
         cocotb.log.info(f'Selected randomized traveltime (clks): {traveltime_in_clks}')
 
@@ -33,18 +33,23 @@ async def run_test_captured_out(dut):
         await RisingEdge(dut.clk_in)
         await RisingEdge(dut.clk_in)
 
-        cocotb.log.info('Captured counter value : {},  Expected value: {}'
-                    .format(int(dut.captured_out.value), int(traveltime_in_clks-1) ) )
+        cocotb.log.info('Test nb: {} : Captured counter value : {},  Expected value: {}'
+                    .format(test_nb, int(dut.captured_out.value), int(traveltime_in_clks-1) ) )
 
         await Timer( 1, units='ns' )
         try:
             assert dut.captured_out.value == (traveltime_in_clks-1)
+            print("\033[92m",end='')
+            cocotb.log.info( 'Test nb: {} : Captured counter value : {} =  Expected value: {}. Test Success! '
+                                .format(test_nb, int(dut.captured_out.value), int(traveltime_in_clks-1) ) )
+            print("\033[00m",end='')
         except AssertionError:
-            cocotb.log.error( f'captured_out {dut.captured_out.value} != random_travel_time{traveltime_in_clks}. Test Failed! ' )
+            cocotb.log.error( 'Test nb: {} : Captured counter value : {} !=  Expected value: {}. Test Failed! '
+                                .format(test_nb, int(dut.captured_out.value), int(traveltime_in_clks-1) ) )
             nb_failures += 1
 
-    try:
-        assert nb_failures == 0
-        cocotb.log.info(f'All tests in this suite successful! Nb randomized tests: {nb_tests}')
-    except AssertionError:
-        cocotb.log.info(f'Tests in this suite failes!')
+    assert nb_failures == 0, '{} Tests in this suite failed!'.format(nb_failures)
+
+    print("\033[92m",end='')
+    cocotb.log.info(f'All tests in this suite successful! Nb randomized tests: {nb_tests}')
+    print("\033[00m",end='')
