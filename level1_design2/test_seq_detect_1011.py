@@ -78,10 +78,15 @@ async def test_seq_bug1(dut):
 
     try:
         assert nb_ref_sequence_found == nb_sequence_detected
+        print("\033[93m",end='')
+        dut._log.info('Input overlapping sequence {}'.format(inp_sequence))
         print("\033[92m",end='')
         dut._log.info( 'nb_ref_sequence_found: {}, nb_sequence_detected: {}'.format(nb_ref_sequence_found, nb_sequence_detected) )
         print("\033[00m",end='')
     except AssertionError:
+        print("\033[93m",end='')
+        dut._log.info('Input overlapping sequence {}'.format(inp_sequence))
+        print("\033[00m",end='')
         dut._log.error( 'Nb ref sequence found doesnot match with nb_sequence_detected! '  \
                         'nb_ref_sequence_found: {}, nb_sequence_detected: {}'.format(nb_ref_sequence_found, nb_sequence_detected) )
 
