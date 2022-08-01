@@ -53,7 +53,7 @@ def run_test(dut):
     ternary_imm_instructions        = bitmanip_instructions.get_instructions_ternary_imm()
     all_instructions                = bitmanip_instructions.get_instructions_all()
 
-    stimulus_set                    = [ -1*pow(2,31), pow(2,31)-1, -1*pow(2,31)>>1, (pow(2,31)-1)>>1, -1*pow(2,31)>>2, (pow(2,31)-1)>>2, 1, 0, -1 ]
+    stimulus_set                    = [ -1*pow(2,31), pow(2,31)-1, -1*pow(2,31)>>1, (pow(2,31)-1)>>1, 1, 0, -1 ]
     stimulus_permutations           = list(permutations(stimulus_set,3))
 
     tries            = 0
@@ -110,14 +110,9 @@ def run_test(dut):
         except AssertionError:
             cocotb.log.error('Nb errors in {} tries: {}'.format(tries,instruction_nb_errors))
 
-        print("\033[93m",end='')
-        cocotb.log.info('-------------------------------------------------------')
-        print("\033[00m",end='')
 
-    print("\033[93m",end='')
-    cocotb.log.info('Total nb tries: {}, nb instructions failures: {}'.format(tries, nb_failures))
-    print("\033[00m",end='')
     if ( nb_failures > 0 ):
+        cocotb.log.error('Total nb tries: {}, nb instructions failures: {}'.format(tries, nb_failures))
         for i in range( len(failed_instructions) ):
             cocotb.log.error('{:02}: Failed on Instruction: 0x{}'.format(i,hex(failed_instructions[i])[2:].zfill(8)))
     assert testpass == True, cocotb.log.error('Test Failed')
