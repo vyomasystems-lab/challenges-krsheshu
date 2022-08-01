@@ -17,7 +17,7 @@ async def run_test_captured_out(dut):
 
     random.seed( a = 0 )
     nb_failures     = 0
-    nb_tests        = 10
+    nb_tests        = 100
     for test_nb in range(nb_tests):
         traveltime_in_clks = random.randint(0,1000)
         cocotb.log.info(f'Selected randomized traveltime (clks): {traveltime_in_clks}')
