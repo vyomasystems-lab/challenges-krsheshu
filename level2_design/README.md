@@ -8,6 +8,9 @@
 
 The [CoCoTb](https://www.cocotb.org/) based Python test is developed as explained.
 1) A Class Bitmanip_Instructions ( file: *bitmanip_instructions.py* ) is developed which encapsulates all the instructions are per the specifications
+
+![alt text for screen readers](./images/bitmanip_class.png "bitmanip class").
+
 2) An object of the above class is instantiated in the testbench which can then use any kind of instruction for the tests as per the requirement.
 3) A carefully choosen stimulus set is generated looking at corner cases which consists of 7 inputs
 4) From this 7 input set all the permutations of 3 inputs are choosen as final test vectors for coprocessor registers in the testbench
@@ -17,14 +20,16 @@ The [CoCoTb](https://www.cocotb.org/) based Python test is developed as explaine
 ## Test Scenario **(Important)**
 
 1) The final error instructios can be seen from the below image
+
 ![alt text for screen readers](./images/level2_design_error.png "level2_design Test cases").
+
 2) The *18* failed instructions are displayed in *red*
 
 
 ## Design Bug
 
-1) Mmany instructions fail due to error in implementations
-2) Some instructions looks like not even implemented by the co-processor
+1) 18 instructions failed due to error in implementations
+2) Some instructions seems to be not even implemented by the co-processor
 
 
 ## Verification Strategy
