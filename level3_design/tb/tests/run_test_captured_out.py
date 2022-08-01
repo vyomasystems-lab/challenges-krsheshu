@@ -6,7 +6,7 @@ import random
 
 # rst_capture Test
 @cocotb.test()
-async def run_test_captuered_out(dut):
+async def run_test_captured_out(dut):
 
     # clock
     cocotb.fork( timer_bfm.clock_gen( dut.clk_in ) )

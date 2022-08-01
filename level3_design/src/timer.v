@@ -14,11 +14,7 @@ module timer
             input   wire                start_in        ,
             input   wire                capture_in      ,
 
-            input   wire                alarm_en_in     ,
-            input   wire  [ 31: 0 ]     alarm_in        ,
-
-            output  wire  [ 31: 0 ]     captured_out    ,
-            output  wire                alarm_out
+            output  wire  [ 31: 0 ]     captured_out
 
         );
 
@@ -87,25 +83,6 @@ capture_output_fsm   capture_output_fsm_inst
               .counter_o                    ( counter_out             )
 
         );
-
-//-------------------------------------------------------------
-
-//  Alarm Generator
-
-alarm_generator   alarm_generator_inst
-
-            (
-                  .clk_i                    ( clk_in                  ),
-                  .rst_an_i                 ( rst_as_n                ),
-
-                  .alarm_en_i               ( alarm_en_in             ),
-                  .alarm_i                  ( alarm_in                ),
-                  .counter_i                ( counter_out             ),
-
-                  .alarm_o                  ( alarm_out               )
-
-            );
-
 
 //-------------------------------------------------------------
 
